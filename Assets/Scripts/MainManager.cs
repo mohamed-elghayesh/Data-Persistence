@@ -11,17 +11,29 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
-    public GameObject GameOverText;
+    public Text BestScoreText;
     
+    public GameObject GameOverText;
+
+    private bool m_GameOver = false;
     private bool m_Started = false;
     private int m_Points;
-    
-    private bool m_GameOver = false;
 
-    
+    string playerName;
+    string bestPlayer;
+    int bestScore;
+
     // Start is called before the first frame update
     void Start()
     {
+        // set the persistent playerName
+        // BestScoreText.text = $"Best Score : {PersistenceManager.Instance.playerName} : 0";
+        playerName = PersistenceManager.Instance.playerName;
+        bestPlayer = PersistenceManager.Instance.bestPlayer;
+        bestScore = PersistenceManager.Instance.bestScore;
+        BestScoreText.text = $"Best Score : {bestPlayer} : {bestScore}";
+
+        // position Bricks
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -70,6 +82,10 @@ public class MainManager : MonoBehaviour
 
     public void GameOver()
     {
+        // set the persistent data
+        PersistenceManager.Instance.SaveData(playerName, m_Points);
+        
+        // show game over
         m_GameOver = true;
         GameOverText.SetActive(true);
     }
