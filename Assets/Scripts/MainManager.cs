@@ -26,12 +26,15 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // set the persistent playerName
+        // set the cross sessions persistent playerName
         // BestScoreText.text = $"Best Score : {PersistenceManager.Instance.playerName} : 0";
-        playerName = PersistenceManager.Instance.playerName;
         bestPlayer = PersistenceManager.Instance.bestPlayer;
         bestScore = PersistenceManager.Instance.bestScore;
         BestScoreText.text = $"Best Score : {bestPlayer} : {bestScore}";
+
+        // set the cross scenes persistent data
+        playerName = PersistenceManager.Instance.playerName;
+        ScoreText.text = $"Score : {playerName} {m_Points}";
 
         // position Bricks
         const float step = 0.6f;
@@ -77,7 +80,7 @@ public class MainManager : MonoBehaviour
     void AddPoint(int point)
     {
         m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        ScoreText.text = $"Score : {playerName} {m_Points}";
     }
 
     public void GameOver()
